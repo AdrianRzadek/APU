@@ -1,0 +1,108 @@
+Version: 2.0
+
+#########################
+# Alternatives Section
+#
+
+Alternatives: &alternatives
+
+  iPhone1:
+    Performance: 8
+    Quality: 7
+    Style: 9
+    Price: 6
+  iPhone2:
+    Performance: 9
+    Quality: 8
+    Style: 8
+    Price: 5
+  iPhone3:
+    Performance: 7
+    Quality: 9
+    Style: 7
+    Price: 6
+  iPhone4:
+    Performance: 8
+    Quality: 8
+    Style: 8
+    Price: 7
+  iPhone5:
+    Performance: 9
+    Quality: 9
+    Style: 9
+    Price: 8
+  iPhone6:
+    Performance: 6
+    Quality: 6
+    Style: 7
+    Price: 5
+  iPhone7:
+    Performance: 7
+    Quality: 8
+    Style: 6
+    Price: 7
+  iPhone8:
+    Performance: 8
+    Quality: 7
+    Style: 8
+    Price: 6
+  iPhone9:
+    Performance: 9
+    Quality: 9
+    Style: 9
+    Price: 7
+  iPhone10:
+    Performance: 8
+    Quality: 8
+    Style: 8
+    Price: 6
+
+#
+# End of Alternatives Section
+#####################################
+
+#####################################
+# Goal Section
+#
+
+Goal:
+# The goal spans a tree of criteria and the alternatives
+  name: Smartphone Choice
+  preferences:
+    DecisionMaker:
+      pairwise:
+        - [Performance, Quality, 0.333]
+        - [Performance, Style, 0.2]
+        - [Performance, Price, 3]
+        - [Quality, Style, 0.5]
+        - [Quality, Price, 2]
+        - [Style, Price, 0.25]
+  children:
+    Performance:
+      preferences:
+        DecisionMaker:
+          scoreFunction:
+            function(a) a$Performance
+      children: *alternatives
+    Quality:
+      preferences:
+        DecisionMaker:
+          scoreFunction:
+            function(a) a$Quality
+      children: *alternatives
+    Style:
+      preferences:
+        DecisionMaker:
+          scoreFunction:
+            function(a) a$Style
+      children: *alternatives
+    Price:
+      preferences:
+        DecisionMaker:
+          scoreFunction:
+            function(a) 1/a$Price
+      children: *alternatives
+
+#
+# End of Goal Section
+#####################################
