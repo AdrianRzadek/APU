@@ -1,5 +1,21 @@
+#install.packages("neuralnet")
 library("neuralnet")
-traininginput <- as.data.frame(matrix(c(32 ,1000 ,16 ,500 ,8 ,256 ,64 ,500 ,32 ,500 ,64 ,1000 ,16 ,500 ,8 ,256 ,64 ,500 ,32 ,500 ) , nrow=10, ncol=2))
-trainingoutput <- c(4000 ,3000 ,1100 ,2200 ,2500 ,4200)
-maxs <- apply(traininginput  [ , 1 : 2 ] , 10 , max)
-mins <- apply(traininginput [ , 1 : 2 ] , 10 , min )
+set.seed(123)
+f <- function(x){return (1/sqrt(x))}
+x <- seq(1,10)
+fx<-f(x)
+traininginput <- as.data.frame(fx=fx ,x = x)
+
+
+maxs <- max(traininginput)
+mins <- min(traininginput)
+scaled.traininginput <- as.data.frame(scale(traininginput), center = mins, scale=maxs - mins)
+
+#trainingdata <-chind(scaled.traininginput)
+
+net <-neuralnet(fx~ x, data = scaled.traininginput , hidden = c(3,2), threshold = 0.01)
+plot(net)
+
+test_data <- data.frame(x=seq(1,10))
+scaled.traininginput.test <-as.data.frame(scale(test_data,  center = mins, scale=maxs - mins))
+redictions <- compute(net, scaled.traininginput.test)
