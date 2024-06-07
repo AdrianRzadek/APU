@@ -1,0 +1,5 @@
+library("neuralnet")
+traininginput <- as.data.frame(matrix(c(32 ,1000 ,16 ,500 ,8 ,256 ,64 ,500 ,32 ,500 ,64 ,1000 ,16 ,500 ,8 ,256 ,64 ,500 ,32 ,500 ) , nrow=10, ncol=2))
+trainingoutput <- c(4000 ,3000 ,1100 ,2200 ,2500 ,4200)
+maxs <- apply(traininginput  [ , 1 : 2 ] , 10 , max)
+mins <- apply(traininginput [ , 1 : 2 ] , 10 , min )

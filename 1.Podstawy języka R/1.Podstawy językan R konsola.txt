@@ -1,0 +1,241 @@
+ # a) Obliczenia
+> a <- 12 / exp(12)  
+> b <- 2 * a         
+> 
+> wieksza <- function(a, b) {
++   if (a > b) {
++     return("Wartosc a jest wieksza.")
++   } else if (a < b) {
++     return("Wartosc b jest wieksza.")
++   } else {
++     return("Obie wartosci sa rowne.")
++   }
++ }
+> wynik <- wieksza(a, b)
+> print(wynik)
+[1] "Wartosc b jest wieksza."
+> 
+> # b) Uruchomienie i dokumentacja funkcji sqrt()
+> ?sqrt()
+> 
+> # c) Stworz wektor a zawierajacy liczby od 80 do 90. Policz sume kwadratow liczb zawartych w wektorze.
+> a <- 80:90
+> suma_kwadratow <- sum(a^2)
+> print(paste("Suma kwadratow liczb w wektorze a:", suma_kwadratow))
+[1] "Suma kwadratow liczb w wektorze a: 79585"
+> 
+> # d) Wyswietl wszystkie funkcje zawierajace fraze˛ max w swojej nazwie.
+> apropos("max")
+ [1] "cummax"       "max"          "max.col"      "mem.maxNSize" "mem.maxVSize" "pmax"         "pmax.int"     "promax"       "varimax"      "which.max"   
+> 
+> # e) Ustaw dowolny katalog roboczy. Nastepnie stworz zmienna˛ a zawierajaca˛ lancuch znakow “smartfon Motorola”. Zapisz zmienna˛
+> #a z obszaru roboczego do pliku w katalogu roboczym. Nastepnie usun zmienna˛ a. Sprawdz wartosc zmiennej a (powinno jej brakowac).
+> #Na koncu wczytaj plik ze zmienna a i sprawdz jej wartosc.
+> 
+> setwd("./katalogroboczy")
+> a <- "smartfon Motorola"
+> save(a, file = "a.RData")
+> rm(a)  
+> load("a.RData")
+> 
+> # f) Zainstaluj i zaladuj pakiet gridExtra, ktory umozliwia m.in ładną
+> #wizualizacje danych tabelarycznych. Nastepnie przy pomocy dokumentacji pakietu znajdz funkcje do wizualizacji danych tabelarycznych.
+> #Uzyj jej na pierwszych 10 wierszach zbioru danych Titanic.
+> 
+> install.packages("gridExtra")
+Instalowanie pakietu w ‘C:/Users/adria/AppData/Local/R/win-library/4.4’
+(ponieważ ‘lib’ nie jest określony)
+próbowanie adresu URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/gridExtra_2.3.zip'
+Content type 'application/zip' length 1109322 bytes (1.1 MB)
+downloaded 1.1 MB
+
+pakiet ‘gridExtra’ został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone
+
+Pobrane pakiety binarne są w
+	C:\Users\\\AppData\Local\Temp\Rtmp8WJBx5\downloaded_packages
+> library(gridExtra)
+> ?gridExtra
+> library(grid)
+> ?grid
+> Titanic1 <- head(as.data.frame(Titanic), 10)
+> 
+> TT <- tableGrob(Titanic1)
+> 
+> grid.draw(TT)
+> 
+> # (g) Tworzenie wektora zawierającego ciąg liczb 400, 392, 384, ..., 320
+> wektor <- seq(400,320, by = -8)
+> print(wektor)
+ [1] 400 392 384 376 368 360 352 344 336 328 320
+> 
+> # h)Stwórz wektor a z liczbami od 60 do 40 oraz wektor b z liczbami od 40 do 50. Utwórz nowy wektor d będący połączeniem wektorów b i a 
+> #(w takiej kolejności). Wyświetl go.
+> a <- 60:40
+> b <- 40:50
+> d <- c(b, a)
+> print(d)
+ [1] 40 41 42 43 44 45 46 47 48 49 50 60 59 58 57 56 55 54 53 52 51 50 49 48 47 46 45 44 43 42 41 40
+> 
+> 
+> # i) Stwórz wektor nazwa zawierający nazwy 10 smartfonów Motorola. Następnie stwórz wektory wyswietlacz, pamiec_RAM, pamiec_wbudowana,
+> #aparat_foto, cena, liczba_opinii zawierające dane 10 smartfonów. Utwórz ramkę danych smartfony z wektorów wyswietlacz, pamiec_RAM,
+> #pamiec_wbudowana, aparat_foto, cena, liczba_opinii. Wylicz średnią cenę smartfonów.
+> nazwa <- c("Smartfon Motorola edge 40 neo", "Smartfon Motorola moto G82 ", "Smartfon Motorola moto G72","Smartfon Motorola moto G60","Smartfon Motorola moto g23","Smartfon Motorola edge 30 ultra ","Smartfon Motorola edge 30 neo ","Smartfon Motorola moto g200","Smartfon Motorola edge 40 neo ", "Smartfon Motorola moto g31")
+> wyswietlacz <- c(6.55,6.6,6.6,6.78,6.5,6.67,6.28,6.8,6.55,6.4)
+> pamiec_RAM <- c(12,6,8,6,4,12,8,8,12,4)
+> pamiec_wbudowana <- c(256,128,128,128,128,256,128,128,256,64)
+> aparat_foto <- c("50 Mpix","50 Mpix","108 Mpix","108 Mpix","50 Mpix","64 Mpix","108 Mpix","108 Mpix","50 Mpix","50 Mpix")
+> cena <- c(1699,899,599,499,799,2999,799,899,1699,299)
+> liczba_opinii <- c(134,174,168,123,87,80,80,84,72,72)
+> 
+> smartfony <- data.frame(nazwa, wyswietlacz,pamiec_RAM, pamiec_wbudowana, aparat_foto,cena, liczba_opinii)
+> print(smartfony)
+                              nazwa wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii
+1     Smartfon Motorola edge 40 neo        6.55         12              256     50 Mpix 1699           134
+2       Smartfon Motorola moto G82         6.60          6              128     50 Mpix  899           174
+3        Smartfon Motorola moto G72        6.60          8              128    108 Mpix  599           168
+4        Smartfon Motorola moto G60        6.78          6              128    108 Mpix  499           123
+5        Smartfon Motorola moto g23        6.50          4              128     50 Mpix  799            87
+6  Smartfon Motorola edge 30 ultra         6.67         12              256     64 Mpix 2999            80
+7    Smartfon Motorola edge 30 neo         6.28          8              128    108 Mpix  799            80
+8       Smartfon Motorola moto g200        6.80          8              128    108 Mpix  899            84
+9    Smartfon Motorola edge 40 neo         6.55         12              256     50 Mpix 1699            72
+10       Smartfon Motorola moto g31        6.40          4               64     50 Mpix  299            72
+> srednia_cena <- mean(smartfony$cena)
+> print(srednia_cena)
+[1] 1119
+> 
+> # j) Do stworzonej w poprzednim zadaniu ramki danych smartfony dodaj wpis zawierający dane nowego smartfonu.
+> #Wylicz średnią cenę ponownie.
+> 
+> nowy_smartfon <- data.frame(nazwa = "Smartfon Motorola Moto G52",
++                             wyswietlacz = 6.6,
++                             pamiec_RAM = 6,
++                             pamiec_wbudowana = 256,
++                             aparat_foto = "50 Mpix",
++                             cena = 699,
++                             liczba_opinii = 50)
+> smartfony <- rbind(smartfony, nowy_smartfon)
+> 
+> print(smartfony)
+                              nazwa wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii
+1     Smartfon Motorola edge 40 neo        6.55         12              256     50 Mpix 1699           134
+2       Smartfon Motorola moto G82         6.60          6              128     50 Mpix  899           174
+3        Smartfon Motorola moto G72        6.60          8              128    108 Mpix  599           168
+4        Smartfon Motorola moto G60        6.78          6              128    108 Mpix  499           123
+5        Smartfon Motorola moto g23        6.50          4              128     50 Mpix  799            87
+6  Smartfon Motorola edge 30 ultra         6.67         12              256     64 Mpix 2999            80
+7    Smartfon Motorola edge 30 neo         6.28          8              128    108 Mpix  799            80
+8       Smartfon Motorola moto g200        6.80          8              128    108 Mpix  899            84
+9    Smartfon Motorola edge 40 neo         6.55         12              256     50 Mpix 1699            72
+10       Smartfon Motorola moto g31        6.40          4               64     50 Mpix  299            72
+11       Smartfon Motorola Moto G52        6.60          6              256     50 Mpix  699            50
+> srednia_cena <- mean(smartfony$cena)
+> print(srednia_cena)
+[1] 1080.818
+> 
+> # k) Korzystając z ramki danych smartfony, dodaj nową kolumnę ocena_klientow określającą ocenę klientów w skali od 0 do 5 z krokiem 0.5.
+> #Kolumna powinna automatycznie przekonwertować się do cech jakościowych (factors). Wylicz średnią cenę dla każdej oceny.
+> 
+> ocena_klientow <- c(4.5,2,4,3.5,5,3,4.5,4,1,4.5,1.5)
+> smartfony$ocena_klientow <- factor(ocena_klientow, levels = seq(1, 5, by = 0.5))
+> 
+> srednia_cena_oceny <- aggregate(cena ~ ocena_klientow, data = smartfony, FUN = mean)
+> print(srednia_cena_oceny)
+  ocena_klientow      cena
+1              1 1699.0000
+2            1.5  699.0000
+3              2  899.0000
+4              3 2999.0000
+5            3.5  499.0000
+6              4  749.0000
+7            4.5  932.3333
+8              5  799.0000
+> 
+> #(l) Do ramki danych smartfony dodaj kolejne 4 smartfony. 
+> #Narysuj na wykresie słupkowym liczebność reprezentantów każdej z ocen klientów (pakiet plotrix).
+> #install.packages("plotrix")
+> library(plotrix)
+> nowe_smartfony <- data.frame(nazwa = c('Smartfon Motorola moto g54 power edition ', 'Smartfon Motorola moto g54 power edition', 'Smartfon Motorola moto G84 5G', 'Smartfon Motorola edge 30 Pro 12'),
++                              wyswietlacz = c(6.5, 6.5, 6.5, 6.7), 
++                              pamiec_RAM = c(12, 12, 12, 12),
++                              pamiec_wbudowana = c(256, 256, 256, 256), 
++                              aparat_foto = c('50 Mpix', '50 Mpix', '50 Mpix', '50 Mpix'), 
++                              cena = c(1000, 1000, 1300, 4050), 
++                              liczba_opinii = c(16, 15, 14, 14), 
++                              ocena_klientow = c(1,2,3,4.5))
+> smartfony <- rbind(smartfony, nowe_smartfony)
+> print(smartfony)
+                                       nazwa wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii ocena_klientow
+1              Smartfon Motorola edge 40 neo        6.55         12              256     50 Mpix 1699           134            4.5
+2                Smartfon Motorola moto G82         6.60          6              128     50 Mpix  899           174              2
+3                 Smartfon Motorola moto G72        6.60          8              128    108 Mpix  599           168              4
+4                 Smartfon Motorola moto G60        6.78          6              128    108 Mpix  499           123            3.5
+5                 Smartfon Motorola moto g23        6.50          4              128     50 Mpix  799            87              5
+6           Smartfon Motorola edge 30 ultra         6.67         12              256     64 Mpix 2999            80              3
+7             Smartfon Motorola edge 30 neo         6.28          8              128    108 Mpix  799            80            4.5
+8                Smartfon Motorola moto g200        6.80          8              128    108 Mpix  899            84              4
+9             Smartfon Motorola edge 40 neo         6.55         12              256     50 Mpix 1699            72              1
+10                Smartfon Motorola moto g31        6.40          4               64     50 Mpix  299            72            4.5
+11                Smartfon Motorola Moto G52        6.60          6              256     50 Mpix  699            50            1.5
+12 Smartfon Motorola moto g54 power edition         6.50         12              256     50 Mpix 1000            16              1
+13  Smartfon Motorola moto g54 power edition        6.50         12              256     50 Mpix 1000            15              2
+14             Smartfon Motorola moto G84 5G        6.50         12              256     50 Mpix 1300            14              3
+15          Smartfon Motorola edge 30 Pro 12        6.70         12              256     50 Mpix 4050            14            4.5
+> barplot(table(smartfony$ocena_klientow), main = "Liczebność ocen klientów", xlab = "Ocena", ylab = "Liczba smartfonów")
+> #(m) Wykorzystując ramkę danych smartfony, pokaż procentowy udział każdej oceny przy pomocy wykresu kołowego oraz wachlarzowego (pakiet plotrix).
+> 
+> oceny_procent <- round(prop.table(table(smartfony$ocena_klientow)) * 100, 1)
+> pie(oceny_procent, main = "Procentowy udział ocen klientów", col = rainbow(length(oceny_procent)))
+> 
+> oceny_liczbowe <- as.numeric(as.character(smartfony$ocena_klientow))
+> 
+> tabela_ocen <- table(oceny_liczbowe)
+> 
+> percentage <- table(oceny_liczbowe) / length(oceny_liczbowe)
+> 
+> fan.plot(percentage, labels = names(percentage), main = "Procentowy udział ocen klientów")
+> 
+> #(n) Do ramki danych smartfony dodaj nową kolumnę status_opinii z wartościami: „nie ma”, „mniej 50 opinii”, "50-100 opinii", "więcej 100 opinii" w zależności od liczby opinii. 
+> #Zamień dodaną kolumnę na cechy jakościowe. Przy pomocy wykresu kołowego wyrysuj procentowy udział smartfonów o konkretnym statusie opinii.
+> smartfony$liczba_opinii <- as.numeric(smartfony$liczba_opinii)
+> 
+> smartfony$status_opinii <- cut(smartfony$liczba_opinii, 
++                                breaks = c(-Inf, 0, 50, 100, Inf), 
++                                labels = c("nie ma", "mniej 50 opinii", "50-100 opinii", "więcej 100 opinii"))
+> 
+> smartfony$status_opinii <- as.factor(smartfony$status_opinii)
+> 
+> pie(table(smartfony$status_opinii), main = "Procentowy udział statusów opinii", col = rainbow(length(table(smartfony$status_opinii))))
+> 
+> #(o) Wykorzystując ramkę danych smartfony, stwórz zdanie o każdym ze smartfonów postaci:
+> #nazwa + " ma ocenę klientów " + ocena_klientow + " bo ma liczbę opinii " + liczba_opinii. Plus oznacza konkatenację łańcuchów i wartości.
+> zadanie <- paste(smartfony$ceny, "ma ocene klientow", smartfony$ocena_klientow, "ma liczbe opinii", smartfony$liczba_opinii)
+> print(zadanie)
+ [1] " ma ocene klientow 4.5 ma liczbe opinii 134" " ma ocene klientow 2 ma liczbe opinii 174"   " ma ocene klientow 4 ma liczbe opinii 168"  
+ [4] " ma ocene klientow 3.5 ma liczbe opinii 123" " ma ocene klientow 5 ma liczbe opinii 87"    " ma ocene klientow 3 ma liczbe opinii 80"   
+ [7] " ma ocene klientow 4.5 ma liczbe opinii 80"  " ma ocene klientow 4 ma liczbe opinii 84"    " ma ocene klientow 1 ma liczbe opinii 72"   
+[10] " ma ocene klientow 4.5 ma liczbe opinii 72"  " ma ocene klientow 1.5 ma liczbe opinii 50"  " ma ocene klientow 1 ma liczbe opinii 16"   
+[13] " ma ocene klientow 2 ma liczbe opinii 15"    " ma ocene klientow 3 ma liczbe opinii 14"    " ma ocene klientow 4.5 ma liczbe opinii 14" 
+> 
+> #(p)Zachowaj ramkę danych w pliku .csv. Załaduj ramkę danych z pliku .csv.
+> write.csv(smartfony,"smartfony.csv", row.names = FALSE)
+> smartfonycsv <- read.csv("smartfony.csv")
+> print(smartfonycsv)
+                                       nazwa wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii ocena_klientow     status_opinii
+1              Smartfon Motorola edge 40 neo        6.55         12              256     50 Mpix 1699           134            4.5 więcej 100 opinii
+2                Smartfon Motorola moto G82         6.60          6              128     50 Mpix  899           174            2.0 więcej 100 opinii
+3                 Smartfon Motorola moto G72        6.60          8              128    108 Mpix  599           168            4.0 więcej 100 opinii
+4                 Smartfon Motorola moto G60        6.78          6              128    108 Mpix  499           123            3.5 więcej 100 opinii
+5                 Smartfon Motorola moto g23        6.50          4              128     50 Mpix  799            87            5.0     50-100 opinii
+6           Smartfon Motorola edge 30 ultra         6.67         12              256     64 Mpix 2999            80            3.0     50-100 opinii
+7             Smartfon Motorola edge 30 neo         6.28          8              128    108 Mpix  799            80            4.5     50-100 opinii
+8                Smartfon Motorola moto g200        6.80          8              128    108 Mpix  899            84            4.0     50-100 opinii
+9             Smartfon Motorola edge 40 neo         6.55         12              256     50 Mpix 1699            72            1.0     50-100 opinii
+10                Smartfon Motorola moto g31        6.40          4               64     50 Mpix  299            72            4.5     50-100 opinii
+11                Smartfon Motorola Moto G52        6.60          6              256     50 Mpix  699            50            1.5   mniej 50 opinii
+12 Smartfon Motorola moto g54 power edition         6.50         12              256     50 Mpix 1000            16            1.0   mniej 50 opinii
+13  Smartfon Motorola moto g54 power edition        6.50         12              256     50 Mpix 1000            15            2.0   mniej 50 opinii
+14             Smartfon Motorola moto G84 5G        6.50         12              256     50 Mpix 1300            14            3.0   mniej 50 opinii
+15          Smartfon Motorola edge 30 Pro 12        6.70         12              256     50 Mpix 4050            14            4.5   mniej 50 opinii
+> 
