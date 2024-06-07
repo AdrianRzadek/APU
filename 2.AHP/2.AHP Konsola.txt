@@ -1,0 +1,225 @@
+library("devtools")
+> library(data.tree)
+> library(formattable)
+> library(DiagrammeR)
+> library(ahp)
+> ahp_file <-  "smartphone_ahp.ahp"
+> 
+> ahp_tree <- Load(ahp_file)
+> 
+> Calculate(ahp_tree)
+> 
+> Visualize(ahp_tree)
+Było 50 lub więcej ostrzeżeń (użyj 'warnings()' aby zobaczyć pierwsze 50)
+> 
+> warnings()
+Komunikaty ostrzegawcze:
+1: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+2: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+3: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+4: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+5: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+6: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+7: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+8: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+9: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+10: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+11: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+12: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+13: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+14: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+15: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+16: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+17: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+18: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+19: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+20: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+21: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+22: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+23: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+24: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+25: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+26: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+27: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+28: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+29: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+30: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+31: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+32: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+33: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+34: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+35: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+36: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+37: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+38: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+39: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+40: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+41: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+42: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+43: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+44: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+45: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+46: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+47: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+48: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+49: In (function ()  ... : Funkcja 'Node$fieldsAll' jest przestarzała.
+Użyj w zamian 'Node$attributesAll'.
+Zobacz help("Deprecated")
+50: In (function ()  ... : Funkcja 'Node$fields' jest przestarzała.
+Użyj w zamian 'Node$attributes'.
+Zobacz help("Deprecated")
+> 
+> Analyze(ahp_tree)
+                    Weight iPhone2 iPhone9 iPhone5 iPhone1 iPhone10 iPhone3 iPhone8 iPhone4 iPhone6 iPhone7 Inconsistency
+1 Smartphone Choice 100.0%   11.0%   10.7%   10.4%   10.2%    10.2%    9.9%    9.9%    9.8%    9.3%    8.8%         78.3%
+2  ¦--Style          29.6%    3.0%    3.4%    3.4%    3.4%     3.0%    2.6%    3.0%    3.0%    2.6%    2.2%            NA
+3  ¦--Price          27.0%    3.3%    2.4%    2.1%    2.8%     2.8%    2.8%    2.8%    2.4%    3.3%    2.4%            NA
+4  ¦--Quality        24.7%    2.5%    2.8%    2.8%    2.2%     2.5%    2.8%    2.2%    2.5%    1.9%    2.5%            NA
+5  °--Performance    18.8%    2.1%    2.1%    2.1%    1.9%     1.9%    1.7%    1.9%    1.9%    1.4%    1.7%            NA
+> 
+> AnalyzeTable(ahp_tree)
+> 
+> print(ahp_tree)
+           levelName
+1  Smartphone Choice
+2   ¦--Performance  
+3   ¦   ¦--iPhone1  
+4   ¦   ¦--iPhone2  
+5   ¦   ¦--iPhone3  
+6   ¦   ¦--iPhone4  
+7   ¦   ¦--iPhone5  
+8   ¦   ¦--iPhone6  
+9   ¦   ¦--iPhone7  
+10  ¦   ¦--iPhone8  
+11  ¦   ¦--iPhone9  
+12  ¦   °--iPhone10 
+13  ¦--Quality      
+14  ¦   ¦--iPhone1  
+15  ¦   ¦--iPhone2  
+16  ¦   ¦--iPhone3  
+17  ¦   ¦--iPhone4  
+18  ¦   ¦--iPhone5  
+19  ¦   ¦--iPhone6  
+20  ¦   ¦--iPhone7  
+21  ¦   ¦--iPhone8  
+22  ¦   ¦--iPhone9  
+23  ¦   °--iPhone10 
+24  ¦--Style        
+25  ¦   ¦--iPhone1  
+26  ¦   ¦--iPhone2  
+27  ¦   ¦--iPhone3  
+28  ¦   ¦--iPhone4  
+29  ¦   ¦--iPhone5  
+30  ¦   ¦--iPhone6  
+31  ¦   ¦--iPhone7  
+32  ¦   ¦--iPhone8  
+33  ¦   ¦--iPhone9  
+34  ¦   °--iPhone10 
+35  °--Price        
+36      ¦--iPhone1  
+37      ¦--iPhone2  
+38      ¦--iPhone3  
+39      ¦--iPhone4  
+40      ¦--iPhone5  
+41      ¦--iPhone6  
+42      ¦--iPhone7  
+43      ¦--iPhone8  
+44      ¦--iPhone9  
+45      °--iPhone10 
+> 
