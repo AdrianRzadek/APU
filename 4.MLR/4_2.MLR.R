@@ -15,9 +15,22 @@ library(mlr3learners)
 smartfony <- read.csv("./smartfony.csv")
 
 
-smartfony_tree <- rpart(nazwa ~ ., data = smartfony, method = "class")
+character_columns <- sapply(smartfony, is.character)
+character_columns
+
+# Przekonwertowanie kolumn "character" na "factor"
+smartfony[character_columns] <- lapply(smartfony[character_columns], as.factor)
+
+# Upewnienie się, że wszystkie kolumny są teraz prawidłowego typu
+str(smartfony)
+
+# Ponowne uruchomienie funkcji ctree
+tree_fit <- ctree(cena ~ ., data = smartfony)
+
+
+smartfony_tree_rpart <- rpart(nazwa ~ ., data = smartfony, control = rpart.control(minsplit = 10, cp = 0.01))
 summary(smartfony_tree)
-tree_fit <- ctree(status ~ ., data = smartfony)
+tree_fit <- ctree(cena~ ., data = smartfony)
 plot(smartfony_tree)
 text(smartfony_tree, use.n = TRUE)
 plot(tree_fit)
@@ -26,7 +39,7 @@ learners <- mlr_learners
 print(learners)
 
 
-task = as_task_classif(sex ~ ., data = smartfony)
+task = as_task_classif(cena ~ ., data = smartfony)
 task
 learner = lrn("classif.rpart", cp = .01)
 
