@@ -1,0 +1,135 @@
+> #install.packages("neuralnet")
+> library("neuralnet")
+> #1.
+> set.seed(123)
+> f <- function(x){return (1/sqrt(x))}
+> x <- seq(1,10)
+> fx<-f(x)
+> traininginput <- as.data.frame(fx=fx ,x = x)
+> 
+> 
+> maxs <- max(traininginput)
+> mins <- min(traininginput)
+> 
+> scaled.traininginput <- as.data.frame(scale(traininginput), center = mins, scale=maxs - mins)
+> 
+> net <-neuralnet(fx~ x, data = scaled.traininginput , hidden = c(3,2), threshold = 0.01)
+> plot(net)
+> 
+> test_data <- data.frame(x=seq(1,10))
+> scaled.traininginput.test <-as.data.frame(scale(test_data,  center = mins, scale=maxs - mins))
+> redictions <- compute(net, scaled.traininginput.test)
+> 
+> #2.
+> smartfony <- read.csv("./smartfony.csv")
+> 
+> traininginputSmartfony <- smartfony[, c('nazwa', 'cena')]
+> 
+> traininginputSmartfony$cena <- (traininginputSmartfony$cena - min(traininginputSmartfony$cena)) / (max(traininginputSmartfony$cena) - min(traininginputSmartfony$cena))
+> 
+> print(traininginputSmartfony)
+                                       nazwa       cena
+1              Smartfon Motorola edge 40 neo 0.37323380
+2                Smartfon Motorola moto G82  0.15995734
+3                 Smartfon Motorola moto G72 0.07997867
+4                 Smartfon Motorola moto G60 0.05331911
+5                 Smartfon Motorola moto g23 0.13329779
+6           Smartfon Motorola edge 30 ultra  0.71980805
+7             Smartfon Motorola edge 30 neo  0.13329779
+8                Smartfon Motorola moto g200 0.15995734
+9             Smartfon Motorola edge 40 neo  0.37323380
+10                Smartfon Motorola moto g31 0.00000000
+11                Smartfon Motorola Moto G52 0.10663823
+12 Smartfon Motorola moto g54 power edition  0.18688350
+13  Smartfon Motorola moto g54 power edition 0.18688350
+14             Smartfon Motorola moto G84 5G 0.26686217
+15          Smartfon Motorola edge 30 Pro 12 1.00000000
+> 
+> traininginputSmartfony$nazwa <- as.numeric(factor(traininginputSmartfony$nazwa))
+> 
+> formula <- as.formula("cena ~ nazwa")
+> 
+> net <- neuralnet(formula, data = traininginputSmartfony, hidden = c(3,2), threshold = 0.01)
+> 
+> plot(net)
+> 
+> 
+> 
+> print(traininginputSmartfony)
+   nazwa       cena
+1      4 0.37323380
+2     14 0.15995734
+3     13 0.07997867
+4     12 0.05331911
+5      7 0.13329779
+6      3 0.71980805
+7      1 0.13329779
+8      6 0.15995734
+9      5 0.37323380
+10     8 0.00000000
+11     9 0.10663823
+12    11 0.18688350
+13    10 0.18688350
+14    15 0.26686217
+15     2 1.00000000
+> 
+> 
+> test_data <- data.frame(nazwa = seq(1, 15))
+> 
+> 
+> print(str(traininginputSmartfony))
+'data.frame':	15 obs. of  2 variables:
+ $ nazwa: num  4 14 13 12 7 3 1 6 5 8 ...
+ $ cena : num  0.3732 0.16 0.08 0.0533 0.1333 ...
+NULL
+> 
+> test_data$nazwa <- as.numeric(factor(test_data$nazwa, levels = levels(factor(traininginputSmartfony$nazwa))))
+> 
+> min_nazwa <- min(traininginputSmartfony$nazwa)
+> max_nazwa <- max(traininginputSmartfony$nazwa)
+> scaled_test_data <- data.frame(nazwa = (test_data$nazwa - min_nazwa) / (max_nazwa - min_nazwa))
+> 
+> colnames(scaled_test_data) <- "nazwa"
+> 
+> print(scaled_test_data)
+        nazwa
+1  0.00000000
+2  0.07142857
+3  0.14285714
+4  0.21428571
+5  0.28571429
+6  0.35714286
+7  0.42857143
+8  0.50000000
+9  0.57142857
+10 0.64285714
+11 0.71428571
+12 0.78571429
+13 0.85714286
+14 0.92857143
+15 1.00000000
+> 
+> predictions <- compute(net, scaled_test_data)
+> 
+> min_cena <- min(traininginputSmartfony$cena)
+> max_cena <- max(traininginputSmartfony$cena)
+> predicted_cena <- predictions$net.result * (max_cena - min_cena) + min_cena
+> 
+> result <- data.frame(test_data, Predicted_Cena = predicted_cena)
+> print(result)
+   nazwa Predicted_Cena
+1      1    -0.22297453
+2      2    -0.22067805
+3      3    -0.21754851
+4      4    -0.21333333
+5      5    -0.20769289
+6      6    -0.20016812
+7      7    -0.19013760
+8      8    -0.17676413
+9      9    -0.15893479
+10    10    -0.13520894
+11    11    -0.10380490
+12    12    -0.06268052
+13    13    -0.00978063
+14    14     0.05649154
+15    15     0.13661269
