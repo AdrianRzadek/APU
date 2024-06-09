@@ -1,0 +1,348 @@
+> library("tm")
+Ładowanie wymaganego pakietu: NLP
+Komunikat ostrzegawczy:
+W poleceniu 'readRDS(path)': błąd czytania z połączenia
+> library("SnowballC")
+> library("wordcloud")
+Ładowanie wymaganego pakietu: RColorBrewer
+> library("RColorBrewer")
+> library("syuzhet")
+> library("ggplot2")
+
+Dołączanie pakietu: ‘ggplot2’
+
+Następujący obiekt został zakryty z ‘package:NLP’:
+
+    annotate
+
+> library("tidytext")
+
+Dołączanie pakietu: ‘tidytext’
+
+Następujący obiekt został zakryty _przez_ ‘.GlobalEnv’:
+
+    stop_words
+
+> library("igraph")
+
+Dołączanie pakietu: ‘igraph’
+
+Następujące obiekty zostały zakryte z ‘package:stats’:
+
+    decompose, spectrum
+
+Następujący obiekt został zakryty z ‘package:base’:
+
+    union
+
+> library("ggraph")
+> library(dplyr)
+
+Dołączanie pakietu: ‘dplyr’
+
+Następujące obiekty zostały zakryte z ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+Następujące obiekty zostały zakryte z ‘package:stats’:
+
+    filter, lag
+
+Następujące obiekty zostały zakryte z ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(tidyr)
+
+Dołączanie pakietu: ‘tidyr’
+
+Następujący obiekt został zakryty z ‘package:igraph’:
+
+    crossing
+
+> 
+> text <- readLines('./Wikipedia.txt')
+Komunikat ostrzegawczy:
+W poleceniu 'readLines("./Wikipedia.txt")':
+  niekompletna końcowa linia znaleziona w './Wikipedia.txt'
+> print(text)
+[1] "Tesla, Inc. (/ˈtɛslə/ TESS-lə or /ˈtɛzlə/ TEZ-lə[a]) is an American multinational automotive and clean energy company headquartered in Austin, Texas, which designs, manufactures and sells battery electric vehicles (BEVs), stationary battery energy storage devices from home to grid-scale, solar panels and solar shingles, and related products and services. The company is also developing artificial intelligence[6] and robotics[7] products."                                                                                                                                                                                                                                                                                                                                                                             
+[2] ""                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+[3] "Tesla was incorporated in July 2003 by Martin Eberhard and Marc Tarpenning as Tesla Motors. The company's name is a tribute to inventor and electrical engineer Nikola Tesla. In February 2004, Elon Musk joined as the company's largest shareholder; in 2008, he was named chief executive officer. In 2008, the company began production of its first car model, the Roadster sports car, followed by the Model S sedan in 2012, the Model X SUV in 2015, the Model 3 sedan in 2017, the Model Y crossover in 2020, the Tesla Semi truck in 2022 and the Cybertruck pickup truck in 2023. The Model 3 is the all-time bestselling plug-in electric car worldwide, and in June 2021 became the first electric car to sell 1 million units globally.[8] In 2023, the Model Y was the best-selling vehicle, of any kind, globally.[3]"
+[4] ""                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+[5] "Tesla is one of the world's most valuable companies in terms of market capitalization. In October 2021, Tesla temporarily became a trillion dollar company, the seventh U.S. company to do so. In 2023, the company led the battery electric vehicle market, with 19.9% share. Also in 2023, the company was ranked 69th in the Forbes Global 2000.[9] As of March 2024, it is the world's most valuable automaker. Tesla has been the subject of lawsuits, government scrutiny, and journalistic criticism, stemming from allegations of whistleblower retaliation, worker rights violations, product defects, fraud, and Musk's many controversial statements."                                                                                                                                                                     
+> 
+> 
+> # Load the data as a corpus
+> TextDoc <- Corpus(VectorSource(text))
+> 
+> # Cleaning up Text Data
+> toSpace <- content_transformer(function (x, pattern) gsub(pattern, " ", x))
+> TextDoc <- tm_map(TextDoc, toSpace, "/")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, "/")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, "@")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, "@")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, "\\|")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, "\\|")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, "ˆa“")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, "ˆa“")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, ":")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, ":")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, ";")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, ";")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, ",")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, ",")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, toSpace, "ˆI\nTM")
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, toSpace, "ˆI\nTM")':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, content_transformer(tolower))
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, content_transformer(tolower))':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, removeNumbers)
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, removeNumbers)':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, removeWords, stopwords("english"))
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, removeWords, stopwords("english"))':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, removeWords, c("s", "company", "team"))
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, removeWords, c("s", "company", "team"))':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, removePunctuation)
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, removePunctuation)':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, stripWhitespace)
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, stripWhitespace)':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, stemDocument)
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, stemDocument)':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, content_transformer(function(x) gsub(x, pattern = "mathemat", replacement = "math")))
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, content_transformer(function(x) gsub(x, ':
+  transformation drops documents
+> TextDoc <- tm_map(TextDoc, content_transformer(function(x) gsub(x, pattern = " r ", replacement = " Rlanguage ")))
+Komunikat ostrzegawczy:
+W poleceniu 'tm_map.SimpleCorpus(TextDoc, content_transformer(function(x) gsub(x, ':
+  transformation drops documents
+> 
+> # Building the term document matrix
+> TextDoc_dtm <- TermDocumentMatrix(TextDoc)
+> dtm_m <- as.matrix(TextDoc_dtm)
+> dtm_v <- sort(rowSums(dtm_m), decreasing=TRUE)
+> dtm_d <- data.frame(word = names(dtm_v), freq = dtm_v)
+> 
+> # Display the top 5 most frequent words
+> head(dtm_d, 5)
+           word freq
+tesla     tesla    8
+model     model    7
+electr   electr    5
+product product    4
+car         car    4
+> 
+> # Plot the most frequent words
+> barplot(dtm_d[1:20,]$freq, las = 2, names.arg = dtm_d[1:20,]$word, col = "lightgreen",
++         main = "Top 20 most frequent words in the forms of knowledge\nassessment for the Big Data training courses",
++         ylab = "Word frequencies")
+> 
+> # Generate the Word Cloud
+> set.seed(1234)
+> wordcloud(words = dtm_d$word, freq = dtm_d$freq, scale = c(5, 0.5), min.freq = 1,
++           max.words = 100, random.order = FALSE, rot.per = 0.40, colors = brewer.pal(8, "Dark2"))
+Było 50 lub więcej ostrzeżeń (użyj 'warnings()' aby zobaczyć pierwsze 50)
+> 
+> # Word Association
+> findAssocs(TextDoc_dtm, terms = c("program", "algorithm", "math", "statist"), corlimit = 0.5)
+$program
+numeric(0)
+
+$algorithm
+numeric(0)
+
+$math
+numeric(0)
+
+$statist
+numeric(0)
+
+> findAssocs(TextDoc_dtm, terms = findFreqTerms(TextDoc_dtm, lowfreq = 30), corlimit = 0.5)
+named list()
+> 
+> # Sentiment Scores
+> syuzhet_vector <- get_sentiment(text, method = "syuzhet")
+> head(syuzhet_vector)
+[1]  1.25  0.00  3.60  0.00 -4.30
+> summary(syuzhet_vector)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  -4.30    0.00    0.00    0.11    1.25    3.60 
+> 
+> bing_vector <- get_sentiment(text, method = "bing")
+> head(bing_vector)
+[1]  2  0  1  0 -3
+> summary(bing_vector)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     -3       0       0       0       1       2 
+> 
+> afinn_vector <- get_sentiment(text, method = "afinn")
+> head(afinn_vector)
+[1]   2   0   7   0 -16
+> summary(afinn_vector)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  -16.0     0.0     0.0    -1.4     2.0     7.0 
+> 
+> rbind(
++   sign(head(syuzhet_vector)),
++   sign(head(bing_vector)),
++   sign(head(afinn_vector))
++ )
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    1    0   -1
+[2,]    1    0    1    0   -1
+[3,]    1    0    1    0   -1
+> 
+> # Emotion Classification
+> d <- get_nrc_sentiment(as.vector(dtm_d$word))
+> head(d, 10)
+   anger anticipation disgust fear joy sadness surprise trust negative positive
+1      0            0       0    0   0       0        0     0        0        0
+2      0            0       0    0   0       0        0     0        0        1
+3      0            0       0    0   0       0        0     0        0        0
+4      0            0       0    0   0       0        0     0        0        0
+5      0            0       0    0   0       0        0     0        0        0
+6      0            0       0    0   0       0        0     0        0        0
+7      0            0       0    0   0       0        0     0        0        0
+8      0            0       0    0   0       0        0     0        0        0
+9      0            0       0    0   0       0        0     0        0        0
+10     0            0       0    0   0       0        0     0        0        0
+> 
+> td <- data.frame(t(d))
+> td_new <- data.frame(rowSums(td[1:56]))
+> names(td_new)[1] <- "count"
+> td_new <- cbind("sentiment" = rownames(td_new), td_new)
+> rownames(td_new) <- NULL
+> td_new2 <- td_new[1:8,]
+> 
+> # Plot One - count of words associated with each sentiment
+> quickplot(sentiment, data = td_new2, weight = count, geom = "bar", fill = sentiment, ylab = "count") + ggtitle("Survey sentiments")
+Komunikat ostrzegawczy:
+`qplot()` was deprecated in ggplot2 3.4.0.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated. 
+> 
+> # Plot two - count of words associated with each sentiment, expressed as a percentage
+> barplot(
++   sort(colSums(prop.table(d[, 1:8]))),
++   horiz = TRUE,
++   cex.names = 0.7,
++   las = 1,
++   main = "Emotions in Text", xlab = "Percentage"
++ )
+> 
+> # Konstruowanie grafów powiązań
+> fileName <- 'Wikipedia.txt'
+> text <- readChar(fileName, file.info(fileName)$size)
+> text_df <- data_frame(line = 1, text = iconv(text, "cp1250", "CP852"))
+Komunikat ostrzegawczy:
+`data_frame()` was deprecated in tibble 1.1.0.
+ℹ Please use `tibble()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated. 
+> text_df
+# A tibble: 1 × 2
+   line text 
+  <dbl> <chr>
+1     1 NA   
+> 
+> tidy_text <- text_df %>%
++   unnest_tokens(word, text)
+> 
+> data(stop_words)
+> de <- data.frame("thy", "OLD_WORDS")
+> names(de) <- c("word", "lexicon")
+> stop_words <- rbind(stop_words, de)
+> de <- data.frame("1", "OLD_WORDS")
+> names(de) <- c("word", "lexicon")
+> de <- data.frame("hath", "OLD_WORDS")
+> names(de) <- c("word", "lexicon")
+> de <- data.frame("mar’d", "OLD_WORDS")
+> names(de) <- c("word", "lexicon")
+> stop_words <- rbind(stop_words, de)
+> 
+> tidy_text <- tidy_text %>%
++   anti_join(stop_words)
+Joining with `by = join_by(word)`
+> 
+> tidy_text %>%
++   count(word, sort = TRUE)
+# A tibble: 1 × 2
+  word      n
+  <chr> <int>
+1 NA        1
+> 
+> # Bigrams
+> text_bigrams <- text_df %>%
++   unnest_tokens(bigram, text, token = "ngrams", n = 2)
+> 
+> text_bigrams %>%
++   count(bigram, sort = TRUE)
+# A tibble: 1 × 2
+  bigram     n
+  <chr>  <int>
+1 NA         1
+> 
+> bigrams_separated <- text_bigrams %>%
++   separate(bigram, c("word1", "word2"), sep = " ")
+> 
+> bigrams_filtered <- bigrams_separated %>%
++   filter(!word1 %in% stop_words$word) %>%
++   filter(!word2 %in% stop_words$word)
+> 
+> bigram_counts <- bigrams_filtered %>%
++   count(word1, word2, sort = TRUE)
+> 
+> bigrams_united <- bigrams_filtered %>%
++   unite(bigram, word1, word2, sep = " ")
+> 
+> # Konstruowanie grafów
+> bigram_graph <- bigram_counts %>%
++   filter(word1 == "lord" | word2 == "lord") %>%
++   graph_from_data_frame()
+> 
+> bigram_graph4 <- bigram_counts %>%
++   filter(word1 == "marriage" | word2 == "marriage") %>%
++   graph_from_data_frame()
+> 
+> bigram_graph5 <- bigram_counts %>%
++   filter(word1 == "prince" | word2 == "prince") %>%
++   graph_from_data_frame()
+> 
+> # Plotting
+> dev.new()
+NULL
+> ggraph(bigram_graph4, layout = "fr") +
++   geom_edge_link(aes(edge_alpha = n), show.legend = TRUE, arrow = a, end_cap = circle(.07, 'inches')) +
++   geom_node_point(color = "lightblue", size = 5) +
++   geom_node_text(aes(label = name), position = "identity") +
++   theme_void()
