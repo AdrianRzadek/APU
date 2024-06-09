@@ -10,8 +10,9 @@ library("ggraph")
 library(dplyr)
 library(tidyr)
 
-# Read the text file from local machine, choose file interactively
-text <- readLines(file.choose(Wikipedia.txt))
+text <- readLines('./Wikipedia.txt')
+print(text)
+
 
 # Load the data as a corpus
 TextDoc <- Corpus(VectorSource(text))
@@ -102,7 +103,7 @@ barplot(
 )
 
 # Konstruowanie grafów powiązań
-fileName <- 'MiarkaZaMiarke/measure_for_measure.txt'
+fileName <- 'Wikipedia.txt'
 text <- readChar(fileName, file.info(fileName)$size)
 text_df <- data_frame(line = 1, text = iconv(text, "cp1250", "CP852"))
 text_df
