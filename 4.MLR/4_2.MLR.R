@@ -14,23 +14,28 @@ library(mlr3learners)
 
 smartfony <- read.csv("./smartfony.csv")
 
+smartfony_w <- smartfony[,c('pamiec_RAM', 'pamiec_wbudowana', 'aparat_foto', 'cena', 'ocena_klientow')]
+
+smartfony_w <- as.data.frame(lapply(smartfony_w, function(x) {
+  if(is.character(x)) {
+    return(as.factor(x))
+  } else {
+    return(x)
+  }
+}))
 
 character_columns <- sapply(smartfony, is.character)
 character_columns
 
-# Przekonwertowanie kolumn "character" na "factor"
-smartfony[character_columns] <- lapply(smartfony[character_columns], as.factor)
+#smartfony[character_columns] <- lapply(smartfony_w[character_columns], as.factor)
 
-# Upewnienie się, że wszystkie kolumny są teraz prawidłowego typu
-str(smartfony)
+str(smartfony_w)
 
-# Ponowne uruchomienie funkcji ctree
-tree_fit <- ctree(cena ~ ., data = smartfony)
+tree_fit <- ctree(ocena_klientow ~ ., data = smartfony_w)
 
-
-smartfony_tree_rpart <- rpart(nazwa ~ ., data = smartfony, control = rpart.control(minsplit = 10, cp = 0.01))
+smartfony_tree <- rpart(ocena_klientow ~ ., data = smartfony_w, control = rpart.control(minsplit = 5, cp = 0.05))
 summary(smartfony_tree)
-tree_fit <- ctree(cena~ ., data = smartfony)
+tree_fit <- ctree(ocena_klientow ~ ., data = smartfony_w)
 plot(smartfony_tree)
 text(smartfony_tree, use.n = TRUE)
 plot(tree_fit)
@@ -38,35 +43,27 @@ plot(tree_fit)
 learners <- mlr_learners
 print(learners)
 
-
-task = as_task_classif(cena ~ ., data = smartfony)
+task = as_task_classif(ocena_klientow ~ ., data = smartfony_w)
 task
 learner = lrn("classif.rpart", cp = .01)
 
-
 split = partition(task, ratio = 0.67)
 
-# train the model
 learner$train(task, split$train)
 
-# predict data
 prediction = learner$predict(task, split$test_set)
 
-# calculate performance
 prediction$confusion
-
 
 measure = msr("classif.acc")
 prediction$score(measure)
  
 
- # 3-fold cross validation
 resampling = rsmp("cv", folds = 3L)
 
-# run experiments
 rr = resample(task, learner, resampling)
 
-# access results
 rr$score(measure)[, .(task_id, learner_id, iteration, classif.acc)]
 
 rr$aggregate(measure)
+

@@ -1,0 +1,360 @@
+> #install.packages("party")
+> #install.packages("mlr")
+> #install.packages("C50")
+> #install.packages("mlr3learners")
+> library(readr)
+> library(dplyr)
+
+Dołączanie pakietu: ‘dplyr’
+
+Następujące obiekty zostały zakryte z ‘package:stats’:
+
+    filter, lag
+
+Następujące obiekty zostały zakryte z ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(party)
+Ładowanie wymaganego pakietu: grid
+Ładowanie wymaganego pakietu: mvtnorm
+Ładowanie wymaganego pakietu: modeltools
+Ładowanie wymaganego pakietu: stats4
+Ładowanie wymaganego pakietu: strucchange
+Ładowanie wymaganego pakietu: zoo
+
+Dołączanie pakietu: ‘zoo’
+
+Następujące obiekty zostały zakryte z ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Ładowanie wymaganego pakietu: sandwich
+
+Dołączanie pakietu: ‘party’
+
+Następujący obiekt został zakryty z ‘package:dplyr’:
+
+    where
+
+> library(rpart)
+> library(mlr3)
+> #library(mlr)
+> library(MASS)
+
+Dołączanie pakietu: ‘MASS’
+
+Następujący obiekt został zakryty z ‘package:dplyr’:
+
+    select
+
+> library(C50)
+> library(mlr3learners)
+> 
+> data("Melanoma")
+> 
+> #melanoma_task <- makeClassifTask(status ~ ., data = Melanoma, target = "sex")
+> melanoma_tree <- rpart(sex ~ ., data = Melanoma, method = "class")
+> summary(melanoma_tree)
+Call:
+rpart(formula = sex ~ ., data = Melanoma, method = "class")
+  n= 205 
+
+          CP nsplit rel error    xerror       xstd
+1 0.18987342      0 1.0000000 1.0000000 0.08820532
+2 0.02531646      1 0.8101266 0.8101266 0.08398380
+3 0.01898734      2 0.7848101 0.9620253 0.08753820
+4 0.01687764      8 0.6582278 1.1265823 0.08982971
+5 0.01000000     11 0.6075949 1.1772152 0.09022907
+
+Variable importance
+thickness      time      year       age    status     ulcer 
+       34        29        21        10         4         3 
+
+Node number 1: 205 observations,    complexity param=0.1898734
+  predicted class=0  expected loss=0.3853659  P(node) =1
+    class counts:   126    79
+   probabilities: 0.615 0.385 
+  left son=2 (160 obs) right son=3 (45 obs)
+  Primary splits:
+      thickness < 3.955  to the left,  improve=9.124695, (0 missing)
+      time      < 805    to the right, improve=4.943306, (0 missing)
+      ulcer     < 0.5    to the left,  improve=2.740214, (0 missing)
+      status    < 1.5    to the right, improve=2.404751, (0 missing)
+      age       < 77.5   to the left,  improve=2.213718, (0 missing)
+  Surrogate splits:
+      time < 805    to the right, agree=0.824, adj=0.200, (0 split)
+      age  < 83.5   to the left,  agree=0.800, adj=0.089, (0 split)
+
+Node number 2: 160 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.30625  P(node) =0.7804878
+    class counts:   111    49
+   probabilities: 0.694 0.306 
+  left son=4 (9 obs) right son=5 (151 obs)
+  Primary splits:
+      year      < 1965.5 to the left,  improve=1.7888250, (0 missing)
+      time      < 2103.5 to the right, improve=1.0930940, (0 missing)
+      age       < 75.5   to the left,  improve=1.0295170, (0 missing)
+      status    < 1.5    to the right, improve=0.7875000, (0 missing)
+      thickness < 1      to the right, improve=0.4462912, (0 missing)
+  Surrogate splits:
+      time < 4350   to the right, agree=0.975, adj=0.556, (0 split)
+
+Node number 3: 45 observations,    complexity param=0.02531646
+  predicted class=1  expected loss=0.3333333  P(node) =0.2195122
+    class counts:    15    30
+   probabilities: 0.333 0.667 
+  left son=6 (10 obs) right son=7 (35 obs)
+  Primary splits:
+      thickness < 8.46   to the right, improve=1.8285710, (0 missing)
+      time      < 809.5  to the right, improve=1.3445380, (0 missing)
+      age       < 46.5   to the left,  improve=0.2272727, (0 missing)
+      ulcer     < 0.5    to the left,  improve=0.1503759, (0 missing)
+      year      < 1971.5 to the left,  improve=0.1069519, (0 missing)
+  Surrogate splits:
+      age < 85     to the right, agree=0.8, adj=0.1, (0 split)
+
+Node number 4: 9 observations
+  predicted class=0  expected loss=0  P(node) =0.04390244
+    class counts:     9     0
+   probabilities: 1.000 0.000 
+
+Node number 5: 151 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.3245033  P(node) =0.7365854
+    class counts:   102    49
+   probabilities: 0.675 0.325 
+  left son=10 (142 obs) right son=11 (9 obs)
+  Primary splits:
+      year      < 1966.5 to the right, improve=2.2409290, (0 missing)
+      status    < 1.5    to the right, improve=1.2605030, (0 missing)
+      age       < 75.5   to the left,  improve=0.8951041, (0 missing)
+      time      < 2103.5 to the right, improve=0.8847138, (0 missing)
+      thickness < 3.38   to the left,  improve=0.5342385, (0 missing)
+  Surrogate splits:
+      time < 4052   to the left,  agree=0.974, adj=0.556, (0 split)
+
+Node number 6: 10 observations
+  predicted class=0  expected loss=0.4  P(node) =0.04878049
+    class counts:     6     4
+   probabilities: 0.600 0.400 
+
+Node number 7: 35 observations
+  predicted class=1  expected loss=0.2571429  P(node) =0.1707317
+    class counts:     9    26
+   probabilities: 0.257 0.743 
+
+Node number 10: 142 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.3028169  P(node) =0.6926829
+    class counts:    99    43
+   probabilities: 0.697 0.303 
+  left son=20 (62 obs) right son=21 (80 obs)
+  Primary splits:
+      time      < 2103   to the right, improve=1.3053270, (0 missing)
+      age       < 75.5   to the left,  improve=1.0625080, (0 missing)
+      status    < 1.5    to the right, improve=0.7294051, (0 missing)
+      thickness < 2.17   to the left,  improve=0.5802955, (0 missing)
+      year      < 1967.5 to the left,  improve=0.3545969, (0 missing)
+  Surrogate splits:
+      year      < 1971.5 to the left,  agree=0.824, adj=0.597, (0 split)
+      age       < 54.5   to the left,  agree=0.613, adj=0.113, (0 split)
+      thickness < 0.89   to the left,  agree=0.599, adj=0.081, (0 split)
+
+Node number 11: 9 observations
+  predicted class=1  expected loss=0.3333333  P(node) =0.04390244
+    class counts:     3     6
+   probabilities: 0.333 0.667 
+
+Node number 20: 62 observations,    complexity param=0.01687764
+  predicted class=0  expected loss=0.2258065  P(node) =0.302439
+    class counts:    48    14
+   probabilities: 0.774 0.226 
+  left son=40 (28 obs) right son=41 (34 obs)
+  Primary splits:
+      age       < 48.5   to the left,  improve=1.4379240, (0 missing)
+      time      < 2760   to the left,  improve=1.4098610, (0 missing)
+      year      < 1970.5 to the right, improve=1.0022420, (0 missing)
+      thickness < 1      to the right, improve=0.6004963, (0 missing)
+      ulcer     < 0.5    to the right, improve=0.1774194, (0 missing)
+  Surrogate splits:
+      thickness < 1.37   to the left,  agree=0.629, adj=0.179, (0 split)
+      time      < 3499.5 to the right, agree=0.597, adj=0.107, (0 split)
+
+Node number 21: 80 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.3625  P(node) =0.3902439
+    class counts:    51    29
+   probabilities: 0.637 0.362 
+  left son=42 (54 obs) right son=43 (26 obs)
+  Primary splits:
+      thickness < 2.17   to the left,  improve=1.4564810, (0 missing)
+      time      < 2026   to the left,  improve=1.2250000, (0 missing)
+      age       < 31.5   to the right, improve=1.2250000, (0 missing)
+      ulcer     < 0.5    to the left,  improve=0.8925824, (0 missing)
+      year      < 1969.5 to the right, improve=0.8537879, (0 missing)
+  Surrogate splits:
+      ulcer  < 0.5    to the left,  agree=0.775, adj=0.308, (0 split)
+      time   < 1349   to the right, agree=0.738, adj=0.192, (0 split)
+      year   < 1969.5 to the right, agree=0.738, adj=0.192, (0 split)
+      status < 1.5    to the right, agree=0.713, adj=0.115, (0 split)
+      age    < 70.5   to the left,  agree=0.700, adj=0.077, (0 split)
+
+Node number 40: 28 observations
+  predicted class=0  expected loss=0.1071429  P(node) =0.1365854
+    class counts:    25     3
+   probabilities: 0.893 0.107 
+
+Node number 41: 34 observations,    complexity param=0.01687764
+  predicted class=0  expected loss=0.3235294  P(node) =0.1658537
+    class counts:    23    11
+   probabilities: 0.676 0.324 
+  left son=82 (12 obs) right son=83 (22 obs)
+  Primary splits:
+      time      < 2760   to the left,  improve=2.1399290, (0 missing)
+      thickness < 1.69   to the right, improve=1.9420020, (0 missing)
+      year      < 1970.5 to the right, improve=1.4156860, (0 missing)
+      ulcer     < 0.5    to the right, improve=0.6531039, (0 missing)
+      age       < 59     to the left,  improve=0.1735810, (0 missing)
+  Surrogate splits:
+      year < 1969.5 to the right, agree=0.941, adj=0.833, (0 split)
+      age  < 71     to the right, agree=0.676, adj=0.083, (0 split)
+
+Node number 42: 54 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.2962963  P(node) =0.2634146
+    class counts:    38    16
+   probabilities: 0.704 0.296 
+  left son=84 (46 obs) right son=85 (8 obs)
+  Primary splits:
+      time      < 1504.5 to the right, improve=2.02938800, (0 missing)
+      age       < 64.5   to the right, improve=0.88994710, (0 missing)
+      year      < 1971.5 to the right, improve=0.47407410, (0 missing)
+      thickness < 1.21   to the right, improve=0.14814810, (0 missing)
+      status    < 1.5    to the right, improve=0.02962963, (0 missing)
+  Surrogate splits:
+      year   < 1969   to the right, agree=0.907, adj=0.375, (0 split)
+      status < 2.5    to the left,  agree=0.870, adj=0.125, (0 split)
+
+Node number 43: 26 observations,    complexity param=0.01898734
+  predicted class=0  expected loss=0.5  P(node) =0.1268293
+    class counts:    13    13
+   probabilities: 0.500 0.500 
+  left son=86 (7 obs) right son=87 (19 obs)
+  Primary splits:
+      time      < 1065   to the left,  improve=2.4436090, (0 missing)
+      age       < 55.5   to the right, improve=1.2380950, (0 missing)
+      ulcer     < 0.5    to the left,  improve=0.3611111, (0 missing)
+      thickness < 3.14   to the left,  improve=0.3095238, (0 missing)
+      year      < 1971.5 to the left,  improve=0.3095238, (0 missing)
+  Surrogate splits:
+      age    < 26     to the left,  agree=0.846, adj=0.429, (0 split)
+      year   < 1967.5 to the left,  agree=0.846, adj=0.429, (0 split)
+      status < 2.5    to the right, agree=0.808, adj=0.286, (0 split)
+
+Node number 82: 12 observations
+  predicted class=0  expected loss=0.08333333  P(node) =0.05853659
+    class counts:    11     1
+   probabilities: 0.917 0.083 
+
+Node number 83: 22 observations,    complexity param=0.01687764
+  predicted class=0  expected loss=0.4545455  P(node) =0.1073171
+    class counts:    12    10
+   probabilities: 0.545 0.455 
+  left son=166 (10 obs) right son=167 (12 obs)
+  Primary splits:
+      thickness < 1.7    to the right, improve=2.3757580, (0 missing)
+      year      < 1968.5 to the left,  improve=2.2090910, (0 missing)
+      time      < 3169.5 to the right, improve=2.1948050, (0 missing)
+      age       < 61.5   to the left,  improve=0.7305195, (0 missing)
+      ulcer     < 0.5    to the right, improve=0.5852814, (0 missing)
+  Surrogate splits:
+      status < 1.5    to the left,  agree=0.682, adj=0.3, (0 split)
+      ulcer  < 0.5    to the right, agree=0.682, adj=0.3, (0 split)
+      time   < 3775.5 to the right, agree=0.636, adj=0.2, (0 split)
+      age    < 66     to the right, agree=0.636, adj=0.2, (0 split)
+      year   < 1967.5 to the left,  agree=0.636, adj=0.2, (0 split)
+
+Node number 84: 46 observations
+  predicted class=0  expected loss=0.2391304  P(node) =0.2243902
+    class counts:    35    11
+   probabilities: 0.761 0.239 
+
+Node number 85: 8 observations
+  predicted class=1  expected loss=0.375  P(node) =0.03902439
+    class counts:     3     5
+   probabilities: 0.375 0.625 
+
+Node number 86: 7 observations
+  predicted class=0  expected loss=0.1428571  P(node) =0.03414634
+    class counts:     6     1
+   probabilities: 0.857 0.143 
+
+Node number 87: 19 observations
+  predicted class=1  expected loss=0.3684211  P(node) =0.09268293
+    class counts:     7    12
+   probabilities: 0.368 0.632 
+
+Node number 166: 10 observations
+  predicted class=0  expected loss=0.2  P(node) =0.04878049
+    class counts:     8     2
+   probabilities: 0.800 0.200 
+
+Node number 167: 12 observations
+  predicted class=1  expected loss=0.3333333  P(node) =0.05853659
+    class counts:     4     8
+   probabilities: 0.333 0.667 
+
+> tree_fit <- ctree(status ~ ., data = Melanoma)
+> plot(melanoma_tree)
+> text(melanoma_tree, use.n = TRUE)
+> plot(tree_fit)
+> 
+> learners <- mlr_learners
+> print(learners)
+<DictionaryLearner> with 27 stored values
+Keys: classif.cv_glmnet, classif.debug, classif.featureless, classif.glmnet, classif.kknn, classif.lda, classif.log_reg, classif.multinom,
+  classif.naive_bayes, classif.nnet, classif.qda, classif.ranger, classif.rpart, classif.svm, classif.xgboost, regr.cv_glmnet, regr.debug,
+  regr.featureless, regr.glmnet, regr.kknn, regr.km, regr.lm, regr.nnet, regr.ranger, regr.rpart, regr.svm, regr.xgboost
+> 
+> task = as_task_classif(sex ~ ., data = Melanoma)
+> task
+<TaskClassif:Melanoma> (205 x 7)
+* Target: sex
+* Properties: twoclass
+* Features (6):
+  - int (5): age, status, time, ulcer, year
+  - dbl (1): thickness
+> learner = lrn("classif.rpart", cp = .01)
+> 
+> split = partition(task, ratio = 0.67)
+> 
+> learner$train(task, split$train)
+> 
+> prediction = learner$predict(task, split$test_set)
+> 
+> prediction$confusion
+        truth
+response  0  1
+       0 82 26
+       1 44 53
+> 
+> 
+> measure = msr("classif.acc")
+> prediction$score(measure)
+classif.acc 
+  0.6585366 
+>  
+> resampling = rsmp("cv", folds = 3L)
+> 
+> rr = resample(task, learner, resampling)
+INFO  [11:42:48.023] [mlr3] Applying learner 'classif.rpart' on task 'Melanoma' (iter 1/3)
+INFO  [11:42:48.109] [mlr3] Applying learner 'classif.rpart' on task 'Melanoma' (iter 2/3)
+INFO  [11:42:48.141] [mlr3] Applying learner 'classif.rpart' on task 'Melanoma' (iter 3/3)
+> 
+> rr$score(measure)[, .(task_id, learner_id, iteration, classif.acc)]
+    task_id    learner_id iteration classif.acc
+     <char>        <char>     <int>       <num>
+1: Melanoma classif.rpart         1   0.5217391
+2: Melanoma classif.rpart         2   0.5735294
+3: Melanoma classif.rpart         3   0.6764706
+> 
+> rr$aggregate(measure)
+classif.acc 
+  0.5905797 

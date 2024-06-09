@@ -1,0 +1,166 @@
+#install.packages("party")
+> #install.packages("mlr")
+> #install.packages("C50")
+> #install.packages("mlr3learners")
+> library(readr)
+> library(dplyr)
+> library(party)
+> library(rpart)
+> library(mlr3)
+> #library(mlr)
+> library(MASS)
+> library(C50)
+> library(mlr3learners)
+> 
+> smartfony <- read.csv("./smartfony.csv")
+> 
+> smartfony_w <- smartfony[,c('pamiec_RAM', 'pamiec_wbudowana', 'aparat_foto', 'cena', 'ocena_klientow')]
+> 
+> smartfony_w <- as.data.frame(lapply(smartfony_w, function(x) {
++   if(is.character(x)) {
++     return(as.factor(x))
++   } else {
++     return(x)
++   }
++ }))
+> 
+> character_columns <- sapply(smartfony, is.character)
+> character_columns
+           nazwa      wyswietlacz       pamiec_RAM pamiec_wbudowana      aparat_foto             cena    liczba_opinii 
+            TRUE            FALSE            FALSE            FALSE             TRUE            FALSE            FALSE 
+  ocena_klientow    status_opinii 
+           FALSE             TRUE 
+> 
+> #smartfony[character_columns] <- lapply(smartfony_w[character_columns], as.factor)
+> 
+> str(smartfony_w)
+'data.frame':	15 obs. of  5 variables:
+ $ pamiec_RAM      : int  12 6 8 6 4 12 8 8 12 4 ...
+ $ pamiec_wbudowana: int  256 128 128 128 128 256 128 128 256 64 ...
+ $ aparat_foto     : Factor w/ 3 levels "108 Mpix","50 Mpix",..: 2 2 1 1 2 3 1 1 2 2 ...
+ $ cena            : int  1699 899 599 499 799 2999 799 899 1699 299 ...
+ $ ocena_klientow  : num  4.5 2 4 3.5 5 3 4.5 4 1 4.5 ...
+> 
+> tree_fit <- ctree(ocena_klientow ~ ., data = smartfony_w)
+> 
+> smartfony_tree <- rpart(ocena_klientow ~ ., data = smartfony_w, control = rpart.control(minsplit = 5, cp = 0.05))
+> summary(smartfony_tree)
+Call:
+rpart(formula = ocena_klientow ~ ., data = smartfony_w, control = rpart.control(minsplit = 5, 
+    cp = 0.05))
+  n= 15 
+
+         CP nsplit rel error   xerror      xstd
+1 0.2589950      0 1.0000000 1.100601 0.2459051
+2 0.2014405      1 0.7410050 1.835872 0.4399764
+3 0.0897504      2 0.5395645 1.470263 0.4375519
+4 0.0500000      3 0.4498141 1.440639 0.4411764
+
+Variable importance
+            cena pamiec_wbudowana       pamiec_RAM      aparat_foto 
+              45               23               19               13 
+
+Node number 1: 15 observations,    complexity param=0.258995
+  mean=3.2, MSE=1.793333 
+  left son=2 (8 obs) right son=3 (7 obs)
+  Primary splits:
+      pamiec_wbudowana < 192   to the right, improve=0.2589950, (0 missing)
+      pamiec_RAM       < 5     to the right, improve=0.2061052, (0 missing)
+      cena             < 849   to the right, improve=0.1491119, (0 missing)
+      aparat_foto      splits as  RLL,       improve=0.1297736, (0 missing)
+  Surrogate splits:
+      pamiec_RAM  < 10    to the right, agree=0.933, adj=0.857, (0 split)
+      cena        < 949.5 to the right, agree=0.933, adj=0.857, (0 split)
+      aparat_foto splits as  RLL,       agree=0.800, adj=0.571, (0 split)
+
+Node number 2: 8 observations,    complexity param=0.2014405
+  mean=2.5625, MSE=1.777344 
+  left son=4 (3 obs) right son=5 (5 obs)
+  Primary splits:
+      cena < 1150  to the left,  improve=0.3810989, (0 missing)
+
+Node number 3: 7 observations,    complexity param=0.0897504
+  mean=3.928571, MSE=0.8163265 
+  left son=6 (2 obs) right son=7 (5 obs)
+  Primary splits:
+      cena        < 849   to the right, improve=0.422500000, (0 missing)
+      pamiec_RAM  < 5     to the right, improve=0.330625000, (0 missing)
+      aparat_foto splits as  RL-,       improve=0.008333333, (0 missing)
+
+Node number 4: 3 observations
+  mean=1.5, MSE=0.1666667 
+
+Node number 5: 5 observations
+  mean=3.2, MSE=1.66 
+
+Node number 6: 2 observations
+  mean=3, MSE=1 
+
+Node number 7: 5 observations
+  mean=4.3, MSE=0.26 
+
+> tree_fit <- ctree(ocena_klientow ~ ., data = smartfony_w)
+> plot(smartfony_tree)
+> text(smartfony_tree, use.n = TRUE)
+> plot(tree_fit)
+> 
+> learners <- mlr_learners
+> print(learners)
+<DictionaryLearner> with 27 stored values
+Keys: classif.cv_glmnet, classif.debug, classif.featureless, classif.glmnet, classif.kknn, classif.lda,
+  classif.log_reg, classif.multinom, classif.naive_bayes, classif.nnet, classif.qda, classif.ranger, classif.rpart,
+  classif.svm, classif.xgboost, regr.cv_glmnet, regr.debug, regr.featureless, regr.glmnet, regr.kknn, regr.km,
+  regr.lm, regr.nnet, regr.ranger, regr.rpart, regr.svm, regr.xgboost
+> 
+> task = as_task_classif(ocena_klientow ~ ., data = smartfony_w)
+> task
+<TaskClassif:smartfony_w> (15 x 5)
+* Target: ocena_klientow
+* Properties: multiclass
+* Features (4):
+  - int (3): cena, pamiec_RAM, pamiec_wbudowana
+  - fct (1): aparat_foto
+> learner = lrn("classif.rpart", cp = .01)
+> 
+> split = partition(task, ratio = 0.67)
+> 
+> learner$train(task, split$train)
+> 
+> prediction = learner$predict(task, split$test_set)
+> 
+> prediction$confusion
+        truth
+response 1 1.5 2 3 3.5 4 4.5 5
+     1   0   0 0 0   0 0   0 0
+     1.5 0   0 0 0   0 0   0 0
+     2   0   0 0 0   0 0   0 0
+     3   0   0 0 0   0 0   0 0
+     3.5 0   0 0 0   0 0   0 0
+     4   0   0 0 0   0 0   0 0
+     4.5 2   1 2 2   1 2   4 1
+     5   0   0 0 0   0 0   0 0
+> 
+> measure = msr("classif.acc")
+> prediction$score(measure)
+classif.acc 
+  0.2666667 
+>  
+> 
+> resampling = rsmp("cv", folds = 3L)
+> 
+> rr = resample(task, learner, resampling)
+INFO  [15:45:53.172] [mlr3] Applying learner 'classif.rpart' on task 'smartfony_w' (iter 1/3)
+INFO  [15:45:53.199] [mlr3] Applying learner 'classif.rpart' on task 'smartfony_w' (iter 2/3)
+INFO  [15:45:53.225] [mlr3] Applying learner 'classif.rpart' on task 'smartfony_w' (iter 3/3)
+> 
+> rr$score(measure)[, .(task_id, learner_id, iteration, classif.acc)]
+       task_id    learner_id iteration classif.acc
+        <char>        <char>     <int>       <num>
+1: smartfony_w classif.rpart         1         0.2
+2: smartfony_w classif.rpart         2         0.2
+3: smartfony_w classif.rpart         3         0.0
+> 
+> rr$aggregate(measure)
+classif.acc 
+  0.1333333 
+> 

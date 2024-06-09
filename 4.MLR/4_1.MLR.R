@@ -14,7 +14,6 @@ library(mlr3learners)
 
 data("Melanoma")
 
-
 #melanoma_task <- makeClassifTask(status ~ ., data = Melanoma, target = "sex")
 melanoma_tree <- rpart(sex ~ ., data = Melanoma, method = "class")
 summary(melanoma_tree)
@@ -26,35 +25,26 @@ plot(tree_fit)
 learners <- mlr_learners
 print(learners)
 
-
 task = as_task_classif(sex ~ ., data = Melanoma)
 task
 learner = lrn("classif.rpart", cp = .01)
 
-
 split = partition(task, ratio = 0.67)
 
-# train the model
 learner$train(task, split$train)
 
-# predict data
 prediction = learner$predict(task, split$test_set)
 
-# calculate performance
 prediction$confusion
 
 
 measure = msr("classif.acc")
 prediction$score(measure)
  
-
- # 3-fold cross validation
 resampling = rsmp("cv", folds = 3L)
 
-# run experiments
 rr = resample(task, learner, resampling)
 
-# access results
 rr$score(measure)[, .(task_id, learner_id, iteration, classif.acc)]
 
 rr$aggregate(measure)
